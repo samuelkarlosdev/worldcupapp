@@ -15,13 +15,34 @@ class _HomePageState extends State<HomePage> {
   final countryList = CountryRepository.countryList;
   List<Country> listCountrySelected = [];
 
+  appBarDynamic() {
+    if (listCountrySelected.isEmpty) {
+      return AppBar(
+        title: const Text('Copa do Mundo'),
+      );
+    } else {
+      return AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            setState(() {
+              listCountrySelected = [];
+            });
+          },
+        ),
+        title: (listCountrySelected.length <= 1)
+            ? Text('${listCountrySelected.length} selecionado')
+            : Text('${listCountrySelected.length} selecionados'),
+        backgroundColor: Colors.blueAccent[50],
+        elevation: 1,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Copa do Mundo'),
-        centerTitle: true,
-      ),
+      appBar: appBarDynamic(),
       body: ListView.separated(
           itemBuilder: (BuildContext context, int country) {
             return ListTile(
@@ -29,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                 borderRadius: BorderRadius.all(Radius.circular(12)),
               ),
               leading: (listCountrySelected.contains(countryList[country]))
-                  ? CircleAvatar(
+                  ? const CircleAvatar(
                       child: Icon(Icons.check),
                     )
                   : Image.asset(countryList[country].flag),
