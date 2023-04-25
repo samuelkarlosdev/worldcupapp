@@ -44,34 +44,49 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: appBarDynamic(),
       body: ListView.separated(
-          itemBuilder: (BuildContext context, int country) {
-            return ListTile(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(12)),
+        itemBuilder: (BuildContext context, int country) {
+          return ListTile(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+            ),
+            leading: (listCountrySelected.contains(countryList[country]))
+                ? const CircleAvatar(
+                    child: Icon(Icons.check),
+                  )
+                : Image.asset(countryList[country].flag),
+            title: Text(countryList[country].name),
+            trailing: Text(
+              countryList[country].titles.toString(),
+            ),
+            selected: listCountrySelected.contains(countryList[country]),
+            selectedTileColor: Colors.blue[50],
+            onLongPress: () {
+              setState(() {
+                (listCountrySelected.contains(countryList[country]))
+                    ? listCountrySelected.remove(countryList[country])
+                    : listCountrySelected.add(countryList[country]);
+              });
+            },
+          );
+        },
+        padding: const EdgeInsets.all(16),
+        separatorBuilder: (_, __) => const Divider(),
+        itemCount: countryList.length,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: listCountrySelected.isNotEmpty
+          ? FloatingActionButton.extended(
+              onPressed: () {},
+              icon: Icon(Icons.star),
+              label: const Text(
+                'FAVORITAR',
+                style: TextStyle(
+                  letterSpacing: 0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              leading: (listCountrySelected.contains(countryList[country]))
-                  ? const CircleAvatar(
-                      child: Icon(Icons.check),
-                    )
-                  : Image.asset(countryList[country].flag),
-              title: Text(countryList[country].name),
-              trailing: Text(
-                countryList[country].titles.toString(),
-              ),
-              selected: listCountrySelected.contains(countryList[country]),
-              selectedTileColor: Colors.blue[50],
-              onLongPress: () {
-                setState(() {
-                  (listCountrySelected.contains(countryList[country]))
-                      ? listCountrySelected.remove(countryList[country])
-                      : listCountrySelected.add(countryList[country]);
-                });
-              },
-            );
-          },
-          padding: const EdgeInsets.all(16),
-          separatorBuilder: (_, __) => const Divider(),
-          itemCount: countryList.length),
+            )
+          : null,
     );
   }
 }
