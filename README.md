@@ -5,4 +5,5 @@ Esse projeto tem como base aplicações de conhecimentos de Dart e Flutter:
 - Selecionando itens da lista com evento de onLongPress;
 - Alterando texto da AppBar com a quantidade de itens selecionados;
 - Mostrando FloatingActionButton para favoritar ao selecionar os itens da lista;
+- Passando informações do item da lista para uma outra Page ao clicar;
 

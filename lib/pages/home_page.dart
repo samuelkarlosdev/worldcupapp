@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:world_cup_app/models/country_model.dart';
+import 'package:world_cup_app/pages/country_details_page.dart';
 import 'package:world_cup_app/repositories/country_repository.dart';
 
 class HomePage extends StatefulWidget {
@@ -39,6 +40,15 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  showCountryDetailsPage(Country country) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => CountryDetailsPage(country: country),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +77,7 @@ class _HomePageState extends State<HomePage> {
                     : listCountrySelected.add(countryList[country]);
               });
             },
+            onTap: () => showCountryDetailsPage(countryList[country]),
           );
         },
         padding: const EdgeInsets.all(16),
