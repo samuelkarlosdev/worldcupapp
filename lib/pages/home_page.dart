@@ -3,6 +3,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:world_cup_app/pages/country_favorites_page.dart';
 import 'package:world_cup_app/pages/country_page.dart';
+import 'package:world_cup_app/widgets/custom_bottom_navigation_bar.dart';
+import 'package:world_cup_app/widgets/custom_navigation_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -32,28 +34,20 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: PageView(
         controller: pageController,
-        children: [
+        onPageChanged: setCurrentPage,
+        children: const [
           CountryPage(),
           CountryFavoritesPage(),
         ],
-        onPageChanged: setCurrentPage,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentPage,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'Seleções',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favoritas',
-          ),
-        ],
-        onTap: (page) {
+
+      // Use CustomBottomNavigationBar or CustomNavigationBar
+      bottomNavigationBar: CustomBottomNavigationBar(
+        selectedIndex: currentPage,
+        onDestinationSelected: (int page) {
           pageController.animateToPage(
             page,
-            duration: Duration(milliseconds: 400),
+            duration: const Duration(milliseconds: 400),
             curve: Curves.ease,
           );
         },
