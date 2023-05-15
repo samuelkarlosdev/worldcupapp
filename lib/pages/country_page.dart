@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:provider/provider.dart';
 import 'package:world_cup_app/models/country_model.dart';
 import 'package:world_cup_app/pages/country_details_page.dart';
+import 'package:world_cup_app/repositories/country_favorites_repository.dart';
 import 'package:world_cup_app/repositories/country_repository.dart';
 
 class CountryPage extends StatefulWidget {
@@ -15,6 +15,7 @@ class CountryPage extends StatefulWidget {
 class _CountryPageState extends State<CountryPage> {
   final countryList = CountryRepository.countryList;
   List<Country> listCountrySelected = [];
+  late CountryFavoritesRepository countryFavorites;
 
   appBarDynamic() {
     if (listCountrySelected.isEmpty) {
@@ -49,8 +50,17 @@ class _CountryPageState extends State<CountryPage> {
     );
   }
 
+  cleanCountrySelecteds() {
+    setState(() {
+      listCountrySelected = [];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    //countryFavorites = Provider.of<CountryFavoritesRepository>(context);
+    countryFavorites = context.watch<CountryFavoritesRepository>();
+
     return Scaffold(
       appBar: appBarDynamic(),
       body: ListView.separated(
@@ -64,7 +74,15 @@ class _CountryPageState extends State<CountryPage> {
                     child: Icon(Icons.check),
                   )
                 : Image.asset(countryList[country].flag),
-            title: Text(countryList[country].name),
+            title: Row(
+              children: [
+                Text(
+                  countryList[country].name,
+                ),
+                if (countryFavorites.listCountry.contains(countryList[country]))
+                  const Icon(Icons.circle, color: Colors.amber, size: 8),
+              ],
+            ),
             trailing: Text(
               countryList[country].titles.toString(),
             ),
@@ -87,8 +105,11 @@ class _CountryPageState extends State<CountryPage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: listCountrySelected.isNotEmpty
           ? FloatingActionButton.extended(
-              onPressed: () {},
-              icon: Icon(Icons.star),
+              onPressed: () {
+                countryFavorites.saveAllFavorites(listCountrySelected);
+                cleanCountrySelecteds();
+              },
+              icon: const Icon(Icons.star),
               label: const Text(
                 'FAVORITAR',
                 style: TextStyle(
