@@ -25,3 +25,4 @@ bottomNavigationBar: CustomBottomNavigationBar(
 ```
 
 - Uso do Provider para gerenciar o estado da lista de seleções ao favoritar algum item da mesma;
+- Mudança de tema do aplicativo (Dark, Light ou o padrão do celular);

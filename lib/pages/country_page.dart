@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:world_cup_app/models/country_model.dart';
 import 'package:world_cup_app/pages/country_details_page.dart';
+import 'package:world_cup_app/repositories/app_theme_repository.dart';
 import 'package:world_cup_app/repositories/country_favorites_repository.dart';
 import 'package:world_cup_app/repositories/country_repository.dart';
 
@@ -16,11 +17,54 @@ class _CountryPageState extends State<CountryPage> {
   final countryList = CountryRepository.countryList;
   List<Country> listCountrySelected = [];
   late CountryFavoritesRepository countryFavorites;
+  late AppThemeRepository appThemeRepository;
+
+  changeTheme() {
+    return PopupMenuButton(
+      icon: const Icon(Icons.brightness_medium_sharp),
+      itemBuilder: (context) => <PopupMenuEntry<String>>[
+        PopupMenuItem(
+          child: RadioListTile<ThemeMode>(
+            value: ThemeMode.system,
+            groupValue: appThemeRepository.themeMode,
+            title: const Text('System'),
+            onChanged: (ThemeMode? value) {
+              appThemeRepository.switchTheme(value);
+              Navigator.pop(context);
+            },
+          ),
+        ),
+        PopupMenuItem(
+          child: RadioListTile<ThemeMode>(
+            value: ThemeMode.light,
+            groupValue: appThemeRepository.themeMode,
+            title: const Text('Light'),
+            onChanged: (ThemeMode? value) {
+              appThemeRepository.switchTheme(value);
+              Navigator.pop(context);
+            },
+          ),
+        ),
+        PopupMenuItem(
+          child: RadioListTile<ThemeMode>(
+            value: ThemeMode.dark,
+            groupValue: appThemeRepository.themeMode,
+            title: const Text('Dark'),
+            onChanged: (ThemeMode? value) {
+              appThemeRepository.switchTheme(value);
+              Navigator.pop(context);
+            },
+          ),
+        ),
+      ],
+    );
+  }
 
   appBarDynamic() {
     if (listCountrySelected.isEmpty) {
       return AppBar(
         title: const Text('Copa do Mundo'),
+        actions: [changeTheme()],
       );
     } else {
       return AppBar(
@@ -60,6 +104,7 @@ class _CountryPageState extends State<CountryPage> {
   Widget build(BuildContext context) {
     //countryFavorites = Provider.of<CountryFavoritesRepository>(context);
     countryFavorites = context.watch<CountryFavoritesRepository>();
+    appThemeRepository = Provider.of<AppThemeRepository>(context);
 
     return Scaffold(
       appBar: appBarDynamic(),
