@@ -26,3 +26,15 @@ bottomNavigationBar: CustomBottomNavigationBar(
 
 - Uso do Provider para gerenciar o estado da lista de seleções ao favoritar algum item da mesma;
 - Mudança de tema do aplicativo (Dark, Light ou o padrão do celular);
+- Uso do MVC Pattern (Model, View, Controller) no projeto;
+- Tela de Login com usuário e senha mockados simulando uma chamada de API (Verificar login_controller.dart) caso queira mudar usuário e senha padrão...
+
+```dart
+ Future<bool> auth() async {
+    inLoader.value = true;
+    await Future.delayed(Duration(seconds: 2));
+    inLoader.value = false;
+    //  User and Password Default
+    return _login == 'admin' && _pass == '123';
+  }
+```
