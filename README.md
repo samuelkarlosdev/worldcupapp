@@ -38,3 +38,5 @@ bottomNavigationBar: CustomBottomNavigationBar(
     return _login == 'admin' && _pass == '123';
   }
 ```
+
+- Uso de components no projeto;
