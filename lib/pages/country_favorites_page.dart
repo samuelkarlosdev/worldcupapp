@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
-import 'package:world_cup_app/repositories/country_favorites_repository.dart';
+import 'package:world_cup_app/controllers/country_favorites_controller.dart';
 
 import '../widgets/custom_country_card.dart';
 
@@ -19,11 +19,12 @@ class _CountryFavoritesPageState extends State<CountryFavoritesPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Seleções Favoritas"),
+        automaticallyImplyLeading: false,
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
         padding: const EdgeInsets.all(12.0),
-        child: Consumer<CountryFavoritesRepository>(
+        child: Consumer<CountryFavoritesController>(
           builder: (context, countryFavorites, child) {
             return countryFavorites.listCountry.isEmpty
                 ? const ListTile(
@@ -33,6 +34,7 @@ class _CountryFavoritesPageState extends State<CountryFavoritesPage> {
                 : ListView.builder(
                     itemCount: countryFavorites.listCountry.length,
                     itemBuilder: (_, index) {
+                      print(countryFavorites.listCountry);
                       return CustomCountryCard(
                           country: countryFavorites.listCountry[index]);
                     },

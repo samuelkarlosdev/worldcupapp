@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:world_cup_app/models/country_model.dart';
 import 'package:world_cup_app/pages/country_details_page.dart';
-import 'package:world_cup_app/repositories/country_favorites_repository.dart';
+import 'package:world_cup_app/controllers/country_favorites_controller.dart';
 import 'package:world_cup_app/widgets/custom_text_info_country.dart';
 
 class CustomCountryCard extends StatefulWidget {
@@ -65,7 +65,7 @@ class _CustomCountryCardState extends State<CustomCountryCard> {
                       title: const Text('Remover dos Favoritos!'),
                       onTap: () {
                         Navigator.pop(context);
-                        Provider.of<CountryFavoritesRepository>(context,
+                        Provider.of<CountryFavoritesController>(context,
                                 listen: false)
                             .removeFavorites(widget.country);
                       },

@@ -1,6 +1,6 @@
 import 'package:world_cup_app/models/country_model.dart';
 
-class CountryRepository {
+/*class CountryRepository {
   static List<Country> countryList = [
     Country(
         name: 'Brasil',
@@ -67,4 +67,8 @@ class CountryRepository {
         thirdplaceyears: '-',
         fourthplaceyear: '1990 e 2018'),
   ];
+}*/
+
+abstract class CountryRepository {
+  Future<List<Country>> getCountry();
 }

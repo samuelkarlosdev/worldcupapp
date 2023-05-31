@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:world_cup_app/pages/home_page.dart';
 import 'package:world_cup_app/pages/login_page.dart';
 import 'package:world_cup_app/pages/splash_page.dart';
-import 'package:world_cup_app/repositories/app_theme_repository.dart';
-import 'package:world_cup_app/repositories/country_favorites_repository.dart';
+import 'package:world_cup_app/controllers/app_theme_controller.dart';
+import 'package:world_cup_app/controllers/country_favorites_controller.dart';
 import 'package:world_cup_app/shared/themes/themes.dart';
 
 void main() {
@@ -19,13 +19,13 @@ class MainApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => CountryFavoritesRepository(),
+          create: (context) => CountryFavoritesController(),
         ),
         ChangeNotifierProvider(
-          create: (context) => AppThemeRepository(),
+          create: (context) => AppThemeController(),
         ),
       ],
-      child: Consumer<AppThemeRepository>(
+      child: Consumer<AppThemeController>(
         builder: (context, value, child) {
           return MaterialApp(
             themeMode: value.themeMode,

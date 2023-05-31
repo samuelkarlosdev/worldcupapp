@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:world_cup_app/models/country_model.dart';
 import 'package:world_cup_app/pages/country_details_page.dart';
-import 'package:world_cup_app/repositories/app_theme_repository.dart';
-import 'package:world_cup_app/repositories/country_favorites_repository.dart';
-import 'package:world_cup_app/repositories/country_repository.dart';
+import 'package:world_cup_app/controllers/app_theme_controller.dart';
+import 'package:world_cup_app/controllers/country_favorites_controller.dart';
+import 'package:world_cup_app/repositories/country_repository_mock.dart';
+
+import '../controllers/country_controller.dart';
 
 class CountryPage extends StatefulWidget {
   const CountryPage({super.key});
@@ -14,10 +16,19 @@ class CountryPage extends StatefulWidget {
 }
 
 class _CountryPageState extends State<CountryPage> {
-  final countryList = CountryRepository.countryList;
+  final CountryController _countryController =
+      CountryController(CountryRepositoryMock());
+
+  //final countryList = CountryRepository.countryList;
   List<Country> listCountrySelected = [];
-  late CountryFavoritesRepository countryFavorites;
-  late AppThemeRepository appThemeRepository;
+  late CountryFavoritesController countryFavoritesController;
+  late AppThemeController appThemeController;
+
+  @override
+  void initState() {
+    super.initState();
+    _countryController.fetch();
+  }
 
   changeTheme() {
     return PopupMenuButton(
@@ -26,10 +37,10 @@ class _CountryPageState extends State<CountryPage> {
         PopupMenuItem(
           child: RadioListTile<ThemeMode>(
             value: ThemeMode.system,
-            groupValue: appThemeRepository.themeMode,
+            groupValue: appThemeController.themeMode,
             title: const Text('System'),
             onChanged: (ThemeMode? value) {
-              appThemeRepository.switchTheme(value);
+              appThemeController.switchTheme(value);
               Navigator.pop(context);
             },
           ),
@@ -37,10 +48,10 @@ class _CountryPageState extends State<CountryPage> {
         PopupMenuItem(
           child: RadioListTile<ThemeMode>(
             value: ThemeMode.light,
-            groupValue: appThemeRepository.themeMode,
+            groupValue: appThemeController.themeMode,
             title: const Text('Light'),
             onChanged: (ThemeMode? value) {
-              appThemeRepository.switchTheme(value);
+              appThemeController.switchTheme(value);
               Navigator.pop(context);
             },
           ),
@@ -48,10 +59,10 @@ class _CountryPageState extends State<CountryPage> {
         PopupMenuItem(
           child: RadioListTile<ThemeMode>(
             value: ThemeMode.dark,
-            groupValue: appThemeRepository.themeMode,
+            groupValue: appThemeController.themeMode,
             title: const Text('Dark'),
             onChanged: (ThemeMode? value) {
-              appThemeRepository.switchTheme(value);
+              appThemeController.switchTheme(value);
               Navigator.pop(context);
             },
           ),
@@ -65,6 +76,7 @@ class _CountryPageState extends State<CountryPage> {
       return AppBar(
         title: const Text('Copa do Mundo'),
         actions: [changeTheme()],
+        automaticallyImplyLeading: false,
       );
     } else {
       return AppBar(
@@ -103,55 +115,66 @@ class _CountryPageState extends State<CountryPage> {
   @override
   Widget build(BuildContext context) {
     //countryFavorites = Provider.of<CountryFavoritesRepository>(context);
-    countryFavorites = context.watch<CountryFavoritesRepository>();
-    appThemeRepository = Provider.of<AppThemeRepository>(context);
+    countryFavoritesController = context.watch<CountryFavoritesController>();
+    appThemeController = Provider.of<AppThemeController>(context);
+
+    print(countryFavoritesController.listCountry.toString());
 
     return Scaffold(
       appBar: appBarDynamic(),
-      body: ListView.separated(
-        itemBuilder: (BuildContext context, int country) {
-          return ListTile(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-            ),
-            leading: (listCountrySelected.contains(countryList[country]))
-                ? const CircleAvatar(
-                    child: Icon(Icons.check),
-                  )
-                : Image.asset(countryList[country].flag),
-            title: Row(
-              children: [
-                Text(
-                  countryList[country].name,
-                ),
-                if (countryFavorites.listCountry.contains(countryList[country]))
-                  const Icon(Icons.circle, color: Colors.amber, size: 8),
-              ],
-            ),
-            trailing: Text(
-              countryList[country].titles.toString(),
-            ),
-            selected: listCountrySelected.contains(countryList[country]),
-            selectedTileColor: Colors.blue[50],
-            onLongPress: () {
-              setState(() {
-                (listCountrySelected.contains(countryList[country]))
-                    ? listCountrySelected.remove(countryList[country])
-                    : listCountrySelected.add(countryList[country]);
-              });
-            },
-            onTap: () => showCountryDetailsPage(countryList[country]),
-          );
-        },
-        padding: const EdgeInsets.all(16),
-        separatorBuilder: (_, __) => const Divider(),
-        itemCount: countryList.length,
-      ),
+      body: ValueListenableBuilder<List<Country>>(
+          valueListenable: _countryController.country,
+          builder: (_, countryList, __) {
+            return ListView.separated(
+              itemBuilder: (BuildContext context, int country) {
+                return ListTile(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                  ),
+                  leading: (listCountrySelected.contains(countryList[country]))
+                      ? const CircleAvatar(
+                          child: Icon(Icons.check),
+                        )
+                      : Image.asset(countryList[country].flag),
+                  title: Row(
+                    children: [
+                      Text(
+                        countryList[country].name,
+                      ),
+                      if (countryFavoritesController.listCountry
+                          .contains(countryList[country]))
+                        const Icon(Icons.circle, color: Colors.amber, size: 8),
+                      if (!countryFavoritesController.listCountry
+                          .contains(countryList[country]))
+                        const Icon(Icons.circle, color: Colors.red, size: 20),
+                    ],
+                  ),
+                  trailing: Text(
+                    countryList[country].titles.toString(),
+                  ),
+                  selected: listCountrySelected.contains(countryList[country]),
+                  selectedTileColor: Colors.blue[50],
+                  onLongPress: () {
+                    setState(() {
+                      (listCountrySelected.contains(countryList[country]))
+                          ? listCountrySelected.remove(countryList[country])
+                          : listCountrySelected.add(countryList[country]);
+                    });
+                  },
+                  onTap: () => showCountryDetailsPage(countryList[country]),
+                );
+              },
+              padding: const EdgeInsets.all(16),
+              separatorBuilder: (_, __) => const Divider(),
+              itemCount: countryList.length,
+            );
+          }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: listCountrySelected.isNotEmpty
           ? FloatingActionButton.extended(
               onPressed: () {
-                countryFavorites.saveAllFavorites(listCountrySelected);
+                countryFavoritesController
+                    .saveAllFavorites(listCountrySelected);
                 cleanCountrySelecteds();
               },
               icon: const Icon(Icons.star),
