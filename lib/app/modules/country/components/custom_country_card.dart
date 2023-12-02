@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:world_cup_app/models/country_model.dart';
-import 'package:world_cup_app/pages/country_details_page.dart';
-import 'package:world_cup_app/controllers/country_favorites_controller.dart';
-import 'package:world_cup_app/widgets/custom_text_info_country.dart';
+import 'package:world_cup_app/app/modules/country/components/custom_text_info_country_widget.dart';
+import 'package:world_cup_app/app/modules/country/country_details_page.dart';
+import 'package:world_cup_app/app/modules/country/models/country_model.dart';
+import 'package:world_cup_app/app/modules/country/country_favorites_controller.dart';
 
 class CustomCountryCard extends StatefulWidget {
   final Country country;
@@ -68,6 +68,13 @@ class _CustomCountryCardState extends State<CustomCountryCard> {
                         Provider.of<CountryFavoritesController>(context,
                                 listen: false)
                             .removeFavorites(widget.country);
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Removido dos Favoritos!"),
+                            duration: Duration(seconds: 5),
+                          ),
+                        );
                       },
                     ),
                   )

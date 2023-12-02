@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
-import 'package:world_cup_app/controllers/country_favorites_controller.dart';
-
-import '../widgets/custom_country_card.dart';
+import 'package:world_cup_app/app/modules/country/components/custom_country_card.dart';
+import 'package:world_cup_app/app/modules/country/country_favorites_controller.dart';
 
 class CountryFavoritesPage extends StatefulWidget {
   const CountryFavoritesPage({super.key});
@@ -34,7 +31,7 @@ class _CountryFavoritesPageState extends State<CountryFavoritesPage> {
                 : ListView.builder(
                     itemCount: countryFavorites.listCountry.length,
                     itemBuilder: (_, index) {
-                      print(countryFavorites.listCountry);
+                      //print(countryFavorites.listCountry);
                       return CustomCountryCard(
                           country: countryFavorites.listCountry[index]);
                     },

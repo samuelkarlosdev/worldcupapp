@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:world_cup_app/pages/country_favorites_page.dart';
-import 'package:world_cup_app/pages/country_page.dart';
-import 'package:world_cup_app/widgets/custom_bottom_navigation_bar.dart';
-import 'package:world_cup_app/widgets/custom_navigation_bar.dart';
+import 'package:world_cup_app/app/modules/country/country_favorites_page.dart';
+import 'package:world_cup_app/app/modules/country/country_page.dart';
+import 'package:world_cup_app/app/modules/home/components/custom_bottom_navigation_bar_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

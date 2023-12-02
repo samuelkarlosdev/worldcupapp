@@ -1,4 +1,4 @@
-import 'package:world_cup_app/models/country_model.dart';
+import 'package:world_cup_app/app/modules/country/models/country_model.dart';
 
 /*class CountryRepository {
   static List<Country> countryList = [

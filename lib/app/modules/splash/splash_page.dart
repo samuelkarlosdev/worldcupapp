@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:world_cup_app/shared/themes/themes.dart';
 
 class SplashPage extends StatefulWidget {
@@ -14,7 +12,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 3))
+    Future.delayed(const Duration(seconds: 3))
         .then((value) => Navigator.of(context).pushReplacementNamed('/login'));
   }
 

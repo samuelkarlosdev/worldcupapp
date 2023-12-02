@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:world_cup_app/models/country_model.dart';
-import 'package:world_cup_app/widgets/custom_text_title_info_country.dart';
-
-import '../widgets/custom_text_info_country.dart';
+import 'package:world_cup_app/app/modules/country/components/custom_text_info_country_widget.dart';
+import 'package:world_cup_app/app/modules/country/components/custom_text_title_info_country_widget.dart';
+import 'package:world_cup_app/app/modules/country/models/country_model.dart';
 
 class CountryDetailsPage extends StatefulWidget {
-  Country country;
+  final Country country;
 
-  CountryDetailsPage({super.key, required this.country});
+  const CountryDetailsPage({super.key, required this.country});
 
   @override
   State<CountryDetailsPage> createState() => _CountryDetailsPageState();

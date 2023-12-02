@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:world_cup_app/controllers/login_controller.dart';
+import 'package:world_cup_app/app/modules/login/login_controller.dart';
 
-import '../components/login/custom_login_button_component.dart';
-import '../widgets/custom_text_field_login_widget.dart';
+import 'components/custom_login_button_widget.dart';
+import 'components/custom_text_field_login_widget.dart';
 
 class LoginPage extends StatelessWidget {
-  LoginController _loginController = LoginController();
+  final LoginController _loginController = LoginController();
 
   LoginPage({super.key});
 

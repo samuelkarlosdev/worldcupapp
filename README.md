@@ -39,5 +39,6 @@ bottomNavigationBar: CustomBottomNavigationBar(
   }
 ```
 
-- Uso de components no projeto;
 - ALTERAÇÃO: Lista de seleções carregada dinamicamente em um ListView baseado em um repositório pegando os dados de um arquivo JSON (Verificar a pasta Assets/data.json);
+- Seleções salvas como favoritas usando Banco de Dados local SQLite (sqflite);
+- Refatoração de pastas do projeto para Módulos (Splash, Home, Login, Country).

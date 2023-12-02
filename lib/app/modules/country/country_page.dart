@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:world_cup_app/models/country_model.dart';
-import 'package:world_cup_app/pages/country_details_page.dart';
+import 'package:world_cup_app/app/modules/country/country_controller.dart';
+import 'package:world_cup_app/app/modules/country/country_details_page.dart';
+import 'package:world_cup_app/app/modules/country/models/country_model.dart';
 import 'package:world_cup_app/controllers/app_theme_controller.dart';
-import 'package:world_cup_app/controllers/country_favorites_controller.dart';
-import 'package:world_cup_app/repositories/country_repository_mock.dart';
-
-import '../controllers/country_controller.dart';
+import 'package:world_cup_app/app/modules/country/country_favorites_controller.dart';
+import 'package:world_cup_app/app/modules/country/repositories/country_repository_mock.dart';
 
 class CountryPage extends StatefulWidget {
   const CountryPage({super.key});
@@ -115,10 +114,11 @@ class _CountryPageState extends State<CountryPage> {
   @override
   Widget build(BuildContext context) {
     //countryFavorites = Provider.of<CountryFavoritesRepository>(context);
-    countryFavoritesController = context.watch<CountryFavoritesController>();
+    countryFavoritesController =
+        Provider.of<CountryFavoritesController>(context);
     appThemeController = Provider.of<AppThemeController>(context);
 
-    print(countryFavoritesController.listCountry.toString());
+    //print(countryFavoritesController.listCountry.toString());
 
     return Scaffold(
       appBar: appBarDynamic(),
@@ -141,12 +141,8 @@ class _CountryPageState extends State<CountryPage> {
                       Text(
                         countryList[country].name,
                       ),
-                      if (countryFavoritesController.listCountry
-                          .contains(countryList[country]))
-                        const Icon(Icons.circle, color: Colors.amber, size: 8),
-                      if (!countryFavoritesController.listCountry
-                          .contains(countryList[country]))
-                        const Icon(Icons.circle, color: Colors.red, size: 20),
+                      /*if (countryFavoritesController.listCountry.contains(countryList[country]))
+                        const Icon(Icons.circle, color: Colors.amber, size: 8),*/
                     ],
                   ),
                   trailing: Text(
@@ -176,6 +172,13 @@ class _CountryPageState extends State<CountryPage> {
                 countryFavoritesController
                     .saveAllFavorites(listCountrySelected);
                 cleanCountrySelecteds();
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Adicionado aos Favoritos!"),
+                    duration: Duration(seconds: 5),
+                  ),
+                );
               },
               icon: const Icon(Icons.star),
               label: const Text(

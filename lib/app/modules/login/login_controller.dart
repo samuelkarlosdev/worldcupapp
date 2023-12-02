@@ -11,7 +11,7 @@ class LoginController {
 
   Future<bool> auth() async {
     inLoader.value = true;
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
     inLoader.value = false;
     //  User and Password Default
     return _login == 'admin' && _pass == '123';

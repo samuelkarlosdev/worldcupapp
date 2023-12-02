@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
-class CustomTextInfoCountry extends StatelessWidget {
+class CustomTextTitleInfoCountry extends StatelessWidget {
   final String title;
 
-  const CustomTextInfoCountry({
+  const CustomTextTitleInfoCountry({
     super.key,
     required this.title,
   });
@@ -16,7 +14,8 @@ class CustomTextInfoCountry extends StatelessWidget {
       title,
       textAlign: TextAlign.center,
       style: TextStyle(
-        fontSize: 20,
+        fontSize: 22,
+        fontWeight: FontWeight.w600,
         color: Colors.grey[800],
       ),
     );
