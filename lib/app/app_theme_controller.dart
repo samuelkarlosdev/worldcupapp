@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class AppThemeController extends ChangeNotifier {
-  ThemeMode _themeMode = ThemeMode.system;
-  ThemeMode get themeMode => _themeMode;
+  Brightness _themeMode = Brightness.light;
+  Brightness get themeMode => _themeMode;
 
-  void switchTheme(ThemeMode? value) {
+  void switchTheme(Brightness? value) {
     if (value != null) {
       _themeMode = value;
     } else {
-      _themeMode = ThemeMode.system;
+      _themeMode = Brightness.light;
     }
     notifyListeners();
   }

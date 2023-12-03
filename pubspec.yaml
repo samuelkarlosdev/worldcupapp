@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
   path_provider: ^2.0.15
   provider:
-  shared_preferences: ^2.1.1
+  shared_preferences: ^2.2.2
   sqflite: ^2.2.8+4
   path: any
 

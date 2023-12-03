@@ -13,9 +13,8 @@ class CustomTextInfoCountry extends StatelessWidget {
     return Text(
       title,
       textAlign: TextAlign.center,
-      style: TextStyle(
-        fontSize: 20,
-        color: Colors.grey[800],
+      style: const TextStyle(
+        fontSize: 18,
       ),
     );
   }

@@ -13,10 +13,9 @@ class CustomTextTitleInfoCountry extends StatelessWidget {
     return Text(
       title,
       textAlign: TextAlign.center,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.w600,
-        color: Colors.grey[800],
       ),
     );
   }

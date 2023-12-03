@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:world_cup_app/app/modules/country/components/custom_text_info_country_widget.dart';
 import 'package:world_cup_app/app/modules/country/country_controller.dart';
 import 'package:world_cup_app/app/modules/country/country_details_page.dart';
 import 'package:world_cup_app/app/modules/country/models/country_model.dart';
-import 'package:world_cup_app/controllers/app_theme_controller.dart';
+import 'package:world_cup_app/app/app_theme_controller.dart';
 import 'package:world_cup_app/app/modules/country/country_favorites_controller.dart';
 import 'package:world_cup_app/app/modules/country/repositories/country_repository_mock.dart';
 
@@ -33,7 +34,7 @@ class _CountryPageState extends State<CountryPage> {
     return PopupMenuButton(
       icon: const Icon(Icons.brightness_medium_sharp),
       itemBuilder: (context) => <PopupMenuEntry<String>>[
-        PopupMenuItem(
+        /*PopupMenuItem(
           child: RadioListTile<ThemeMode>(
             value: ThemeMode.system,
             groupValue: appThemeController.themeMode,
@@ -43,24 +44,24 @@ class _CountryPageState extends State<CountryPage> {
               Navigator.pop(context);
             },
           ),
-        ),
+        ),*/
         PopupMenuItem(
-          child: RadioListTile<ThemeMode>(
-            value: ThemeMode.light,
+          child: RadioListTile<Brightness>(
+            value: Brightness.light,
             groupValue: appThemeController.themeMode,
             title: const Text('Light'),
-            onChanged: (ThemeMode? value) {
+            onChanged: (Brightness? value) {
               appThemeController.switchTheme(value);
               Navigator.pop(context);
             },
           ),
         ),
         PopupMenuItem(
-          child: RadioListTile<ThemeMode>(
-            value: ThemeMode.dark,
+          child: RadioListTile<Brightness>(
+            value: Brightness.dark,
             groupValue: appThemeController.themeMode,
             title: const Text('Dark'),
-            onChanged: (ThemeMode? value) {
+            onChanged: (Brightness? value) {
               appThemeController.switchTheme(value);
               Navigator.pop(context);
             },
@@ -138,8 +139,8 @@ class _CountryPageState extends State<CountryPage> {
                       : Image.asset(countryList[country].flag),
                   title: Row(
                     children: [
-                      Text(
-                        countryList[country].name,
+                      CustomTextInfoCountry(
+                        title: countryList[country].name,
                       ),
                       /*if (countryFavoritesController.listCountry.contains(countryList[country]))
                         const Icon(Icons.circle, color: Colors.amber, size: 8),*/

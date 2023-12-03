@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:world_cup_app/shared/themes/themes.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -19,9 +18,11 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: lightTheme.primaryColor,
+      color: Colors.deepPurple,
       child: const Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(
+          color: Colors.white,
+        ),
       ),
     );
   }
